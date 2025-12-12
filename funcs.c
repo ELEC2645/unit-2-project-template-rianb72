@@ -73,16 +73,70 @@ double bisection(const char *expr, double a, double b, double tol, int max_itera
             fa = fm;
         }
     }
-
     return (a + b) / 2.0;
 }
 
 
 
 void menu_item_2(void) {
-    printf("\n>> Menu 2\n");
+    printf("\n>> False Position Method\n");
     printf("\nSome code here does something useful\n");
     /* you can call a function from here that handles menu 2 */
+    char expr[100];
+    int max_iterations;
+    double a, b, tol, root;
+
+    printf("Enter f(x): ");
+    scanf("%99s", expr);
+
+    printf("\nEnter the starting point(a): ");
+    scanf("%lf", &a);
+
+    printf("\nEnter the ending point(b): ");
+    scanf("%lf", &b);
+
+    printf("\nEnter the maximum number of iterations allowed: ");
+    scanf("%d", &max_iterations);
+
+    printf("\nInput the allowed error tolerance: ");
+    scanf("%lf", &tol);
+
+    root = false_position(expr, a, b, tol, max_iterations);
+
+    if (!isnan(root)) {
+        printf("\nApproximate root: %.10f\n", root);
+        printf("f(root) = %.10f\n", evaluate(expr, root));
+    }
+
+}
+
+double false_position(const char *expr, double a, double b, double tol, int maxIter) {
+    double fa = evaluate(expr, a);
+    double fb = evaluate(expr, b);
+
+    if (fa * fb > 0) {
+        printf("Error: f(a) and f(b) must have opposite signs.\n");
+        return NAN;
+    }
+
+    for (int i = 0; i < maxIter; i++) {
+
+        // False position formula
+        double m = (a * fb - b * fa) / (fb - fa);  
+        double fm = evaluate(expr, m);
+
+        if (fabs(fm) < tol)
+            return m;
+
+        // Update interval
+        if (fa * fm < 0) {
+            b = m;
+            fb = fm;
+        } else {
+            a = m;
+            fa = fm;
+        }
+    }
 }
 
 void menu_item_3(void) {
