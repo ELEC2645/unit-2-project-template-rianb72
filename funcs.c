@@ -4,7 +4,7 @@
 #include <math.h>
 
 void menu_item_1(void) {
-    printf("\n>> Bisection Method:\n");
+    printf("\nBisection Method:\n");
 
     char expr[100];
     int max_iterations;
@@ -79,9 +79,7 @@ double bisection(const char *expr, double a, double b, double tol, int max_itera
 
 
 void menu_item_2(void) {
-    printf("\n>> False Position Method\n");
-    printf("\nSome code here does something useful\n");
-    /* you can call a function from here that handles menu 2 */
+    printf("\nFalse Position Method:\n");
     char expr[100];
     int max_iterations;
     double a, b, tol, root;
@@ -136,9 +134,7 @@ double false_position(const char *expr, double a, double b, double tol, int max_
 }
 
 void menu_item_3(void) {
-    printf("\n>> Newton-Raphson Method\n");
-    printf("\nSome code here does something useful\n");
-    /* you can call a function from here that handles menu 3 */
+    printf("\nNewton-Raphson Method:\n");
     char expr[100];
     int max_iterations;
     double guess, tol, root;
@@ -170,7 +166,7 @@ double newton_raphson(const char *expr, double x0, double tol, double max_iterat
         double dfx = (evaluate(expr, x0 + h) - fx) / h; // finding the derivative
 
         if (fabs(dfx) < 1e-12) {
-            printf("Error: derivative is too small (near zero). Newton-Raphson fails.\n");
+            printf("\nError: derivative is too small (near zero) or invalid input. Newton-Raphson fails.\n");
             return NAN;
         }
 
@@ -188,10 +184,7 @@ double newton_raphson(const char *expr, double x0, double tol, double max_iterat
 }
 
 void menu_item_4(void) {
-    printf("\n>> Menu 4\n");
-    printf("\nSome code here does something useful\n");
-    /* you can call a function from here that handles menu 4 */
-    printf("\n>> Secant Method:\n");
+    printf("\nSecant Method:\n");
 
     char expr[100];
     double x0, x1, tol, root;
@@ -212,7 +205,7 @@ void menu_item_4(void) {
     printf("Enter error tolerance: ");
     scanf("%lf", &tol);
 
-    root = secant_method(expr, x0, x1, tol, max_iterations);
+    root = secant(expr, x0, x1, tol, max_iterations);
 
     if (!isnan(root)) {
         printf("\nApproximate root: %.10f\n", root);
@@ -227,7 +220,7 @@ double secant(const char *expr, double x0, double x1, double tol, double max_ite
     for (int i = 0; i < max_iterations; i++) {
 
         if (fabs(f1 - f0) < 1e-12) {
-            printf("Error: denominator too small, secant method fails.\n");
+            printf("\nError: denominator too small or invalid input, secant method fails.\n");
             return NAN;
         }
 
