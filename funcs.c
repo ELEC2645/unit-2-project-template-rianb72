@@ -58,14 +58,14 @@ double bisection(const char *expr, double a, double b, double tol, int max_itera
         return NAN;
     }
 
-    for (int i = 0; i < max_iterations; i++) {
+    for (int i = 0; i < max_iterations; i++) { // bisection formula
         double m = (a + b) / 2.0;
         double fm = evaluate(expr, m);
 
         if (fabs(fm) < tol || fabs(b - a) < tol)
             return m;
 
-        if (fa * fm < 0) {
+        if (fa * fm < 0) { // Update interval
             b = m;
             fb = fm;
         } else {
@@ -113,23 +113,19 @@ void menu_item_2(void) {
 double false_position(const char *expr, double a, double b, double tol, int max_iterations) {
     double fa = evaluate(expr, a);
     double fb = evaluate(expr, b);
-
     if (fa * fb > 0) {
         printf("Error: f(a) and f(b) must have opposite signs.\n");
         return NAN;
     }
 
     for (int i = 0; i < max_iterations; i++) {
-
-        // False position formula
-        double m = (a * fb - b * fa) / (fb - fa);  
+        double m = (a * fb - b * fa) / (fb - fa);  // False position formula
         double fm = evaluate(expr, m);
 
         if (fabs(fm) < tol)
             return m;
 
-        // Update interval
-        if (fa * fm < 0) {
+        if (fa * fm < 0) { // Update interval
             b = m;
             fb = fm;
         } else {
@@ -140,9 +136,55 @@ double false_position(const char *expr, double a, double b, double tol, int max_
 }
 
 void menu_item_3(void) {
-    printf("\n>> Menu 3\n");
+    printf("\n>> Newton-Raphson Method\n");
     printf("\nSome code here does something useful\n");
     /* you can call a function from here that handles menu 3 */
+    char expr[100];
+    int max_iterations;
+    double guess, tol, root;
+
+    printf("Enter f(x): ");
+    scanf("%99s", expr);
+
+    printf("\nEnter initial guess: ");
+    scanf("%lf", &guess);
+
+    printf("\nEnter the maximum number of iterations allowed: ");
+    scanf("%d", &max_iterations);
+
+    printf("\nInput the allowed error tolerance: ");
+    scanf("%lf", &tol);
+
+    root = newton_raphson(expr, guess, tol, max_iterations);
+
+    if (!isnan(root)) {
+        printf("\nApproximate root: %.10f\n", root);
+        printf("f(root) = %.10f\n", evaluate(expr, root));
+    }
+}
+
+double newton_raphson(const char *expr, double x0, double tol, double max_iterations) {
+    double h = 1e-6; 
+    for (int i = 0; i < max_iterations; i++) {
+        double fx = evaluate(expr, x0);
+        double dfx = (evaluate(expr, x0 + h) - fx) / h; // finding the derivative
+
+        if (fabs(dfx) < 1e-12) {
+            printf("Error: derivative is too small (near zero). Newton-Raphson fails.\n");
+            return NAN;
+        }
+
+        double x1 = x0 - fx / dfx;
+
+        if (fabs(x1 - x0) < tol) {
+            return x1;  // result found
+        }
+
+        x0 = x1;
+    }
+
+    printf("Error: method did not converge within max iterations.\n");
+    return NAN;
 }
 
 void menu_item_4(void) {
