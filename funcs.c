@@ -218,7 +218,6 @@ double secant(const char *expr, double x0, double x1, double tol, double max_ite
     double f1 = evaluate(expr, x1);
 
     for (int i = 0; i < max_iterations; i++) {
-
         if (fabs(f1 - f0) < 1e-12) {
             printf("\nError: denominator too small or invalid input, secant method fails.\n");
             return NAN;
