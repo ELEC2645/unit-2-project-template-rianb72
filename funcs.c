@@ -231,7 +231,7 @@ double secant(const char *expr, double x0, double x1, double tol, double max_ite
             return x2;  // result found
         }
 
-        x0 = x1; // Move forward
+        x0 = x1; // move forward
         f0 = f1;
         x1 = x2;
         f1 = f2;
