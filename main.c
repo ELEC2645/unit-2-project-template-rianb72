@@ -7,6 +7,7 @@
 #include <ctype.h>
 #include <math.h>
 #include "funcs.h"
+#include "tinyexpr.h"
 
 /* Prototypes mirroring the C++ version */
 static void main_menu(void);            /* runs in the main loop */
