@@ -110,7 +110,7 @@ void menu_item_2(void) {
 
 }
 
-double false_position(const char *expr, double a, double b, double tol, int maxIter) {
+double false_position(const char *expr, double a, double b, double tol, int max_iterations) {
     double fa = evaluate(expr, a);
     double fb = evaluate(expr, b);
 
@@ -119,7 +119,7 @@ double false_position(const char *expr, double a, double b, double tol, int maxI
         return NAN;
     }
 
-    for (int i = 0; i < maxIter; i++) {
+    for (int i = 0; i < max_iterations; i++) {
 
         // False position formula
         double m = (a * fb - b * fa) / (fb - fa);  
