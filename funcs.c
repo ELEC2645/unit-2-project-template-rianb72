@@ -39,7 +39,7 @@ double evaluate(const char *expr, double x) { //Error handling and evaluating ex
     te_expr *e = te_compile(expr, vars, 1, &err);
 
     if (!e) {
-        printf("Error: invalid expression at position %d\n", err);
+        printf("\nError: invalid expression at position %d\n", err);
         return NAN;
     }
 
@@ -54,7 +54,7 @@ double bisection(const char *expr, double a, double b, double tol, int max_itera
     double fb = evaluate(expr, b);
 
     if (fa * fb > 0) {
-        printf("Error: f(a) and f(b) must have opposite signs.\n");
+        printf("\nError: f(a) and f(b) must have opposite signs.\n");
         return NAN;
     }
 
@@ -112,7 +112,7 @@ double false_position(const char *expr, double a, double b, double tol, int max_
     double fa = evaluate(expr, a);
     double fb = evaluate(expr, b);
     if (fa * fb > 0) {
-        printf("Error: f(a) and f(b) must have opposite signs.\n");
+        printf("\nError: f(a) and f(b) must have opposite signs.\n");
         return NAN;
     }
 
@@ -179,7 +179,7 @@ double newton_raphson(const char *expr, double x0, double tol, double max_iterat
         x0 = x1;
     }
 
-    printf("Error: method did not converge within max iterations.\n");
+    printf("\nError: method did not converge within max iterations.\n");
     return NAN;
 }
 
@@ -193,16 +193,16 @@ void menu_item_4(void) {
     printf("Enter f(x): ");
     scanf("%99s", expr);
 
-    printf("Enter first initial guess (x0): ");
+    printf("\nEnter first initial guess (x0): ");
     scanf("%lf", &x0);
 
-    printf("Enter second initial guess (x1): ");
+    printf("\nEnter second initial guess (x1): ");
     scanf("%lf", &x1);
 
-    printf("Enter maximum number of iterations: ");
+    printf("\nEnter maximum number of iterations: ");
     scanf("%d", &max_iterations);
 
-    printf("Enter error tolerance: ");
+    printf("\nEnter error tolerance: ");
     scanf("%lf", &tol);
 
     root = secant(expr, x0, x1, tol, max_iterations);
@@ -237,6 +237,6 @@ double secant(const char *expr, double x0, double x1, double tol, double max_ite
         f1 = f2;
     }
 
-    printf("Error: Secant method did not converge within max iterations.\n");
+    printf("\nError: Secant method did not converge within max iterations.\n");
     return NAN;
 }
