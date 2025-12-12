@@ -191,4 +191,59 @@ void menu_item_4(void) {
     printf("\n>> Menu 4\n");
     printf("\nSome code here does something useful\n");
     /* you can call a function from here that handles menu 4 */
+    printf("\n>> Secant Method:\n");
+
+    char expr[100];
+    double x0, x1, tol, root;
+    int max_iterations;
+
+    printf("Enter f(x): ");
+    scanf("%99s", expr);
+
+    printf("Enter first initial guess (x0): ");
+    scanf("%lf", &x0);
+
+    printf("Enter second initial guess (x1): ");
+    scanf("%lf", &x1);
+
+    printf("Enter maximum number of iterations: ");
+    scanf("%d", &max_iterations);
+
+    printf("Enter error tolerance: ");
+    scanf("%lf", &tol);
+
+    root = secant_method(expr, x0, x1, tol, max_iterations);
+
+    if (!isnan(root)) {
+        printf("\nApproximate root: %.10f\n", root);
+        printf("f(root) = %.10f\n", evaluate(expr, root));
+    }
+}
+
+double secant(const char *expr, double x0, double x1, double tol, double max_iterations) {
+    double f0 = evaluate(expr, x0);
+    double f1 = evaluate(expr, x1);
+
+    for (int i = 0; i < max_iterations; i++) {
+
+        if (fabs(f1 - f0) < 1e-12) {
+            printf("Error: denominator too small, secant method fails.\n");
+            return NAN;
+        }
+
+        double x2 = x1 - f1 * (x1 - x0) / (f1 - f0);
+        double f2 = evaluate(expr, x2);
+
+        if (fabs(x2 - x1) < tol || fabs(f2) < tol) {
+            return x2;  // result found
+        }
+
+        x0 = x1; // Move forward
+        f0 = f1;
+        x1 = x2;
+        f1 = f2;
+    }
+
+    printf("Error: Secant method did not converge within max iterations.\n");
+    return NAN;
 }

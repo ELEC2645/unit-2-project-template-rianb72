@@ -10,5 +10,6 @@ double evaluate(const char *expr, double x);
 double bisection(const char *expr, double a, double b, double tol, int maxIter);
 double false_position(const char *expr, double a, double b, double tol, int max_iterations);
 double newton_raphson(const char *expr, double x0, double tol, double max_iterations);
+double secant(const char *expr, double x0, double x1, double tol, double max_iterations);
 
 #endif
